@@ -4,6 +4,11 @@
 	The entry point for the Fusion library.
 ]]
 
+if shared.Fusion then
+	return shared.Fusion
+end
+
+
 local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
 
@@ -41,7 +46,7 @@ type Fusion = {
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
 }
 
-return restrictRead("Fusion", {
+local fusion = restrictRead("Fusion", {
 	version = {major = 0, minor = 2, isRelease = false},
 
 	New = require(script.Instances.New),
@@ -63,3 +68,6 @@ return restrictRead("Fusion", {
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring)
 }) :: Fusion
+
+shared.Fusion = fusion
+return fusion
