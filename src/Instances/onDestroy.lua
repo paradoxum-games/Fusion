@@ -30,46 +30,22 @@ local function onDestroy(instanceRef: PubTypes.SemiWeakRef, callback: (...any) -
 		return function() end
 	end
 
-	local ancestryConn: RBXScriptConnection
+	local disconnectConn: RBXScriptConnection
 	local disconnected = false
 
 	local function disconnect()
 		if not disconnected then
 			disconnected = true
-			ancestryConn:Disconnect()
+			disconnectConn:Disconnect()
 		end
 	end
 
 	local args = table.pack(...)
-	local accessible: boolean
-
-	local function onAncestryChange()
-		if disconnected then
-			return
-		end
-
-		accessible = if instanceRef.instance == nil then false else isAccessible(instanceRef.instance :: Instance)
-
-		if accessible then
-			-- don't need to monitor the instance if it's safely in the game
-			return
-		end
-
-		-- start monitoring the instance for destruction
-		task.defer(function()
-			while not accessible and not disconnected do
-				if not ancestryConn.Connected then
-					callback(table.unpack(args, 1, args.n))
-					disconnect()
-					return
-				end
-				task.wait()
-			end
-		end)
-	end
-
-	ancestryConn = (instanceRef.instance :: Instance).AncestryChanged:Connect(onAncestryChange)
-	onAncestryChange()
+	disconnectConn = (instanceRef.instance :: Instance).Destroying:Connect(function()
+		callback(table.unpack(args, 1, args.n))
+		disconnect()
+		return
+	end)
 
 	return disconnect
 end
