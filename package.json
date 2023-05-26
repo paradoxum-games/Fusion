@@ -1,15 +1,15 @@
 {
-    "name": "@paradoxum-games/fusion",
-    "version": "0.1.0",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/paradoxum-games/Fusion.git"
-    },
-    "contributors": [
-        "elttob"
-    ],
-    "bugs": {
-        "url": "https://github.com/paradoxum-games/Fusion/issues"
-    }
+  "name": "@paradoxum-games/fusion",
+  "version": "0.1.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paradoxum-games/Fusion.git"
+  },
+  "contributors": [
+    "elttob"
+  ],
+  "bugs": {
+    "url": "https://github.com/paradoxum-games/Fusion/issues"
+  }
 }
